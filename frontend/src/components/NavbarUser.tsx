@@ -13,12 +13,14 @@ import React, { useContext, useEffect, useState } from "react";
 import HomeUser from "./HomeUser";
 import { useRouter } from "next/navigation";
 import { UserOrderContext } from ".";
+import { parseCookies } from "nookies";
 
-export const NavbarUser = () => {
+export const NavbarUser = ({ a }: any) => {
   const { orderData }: any = useContext(UserOrderContext);
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const userEmail = JSON.parse(localStorage.getItem("userEmail") as string);
+  const cookies = parseCookies();
+  const userEmail = cookies.email;
   const dropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -32,7 +34,7 @@ export const NavbarUser = () => {
     router.push("/user/saveList");
   };
   const logIn = () => {
-    router.push("/user/logIn");
+    router.push("/user/login");
   };
 
   return (

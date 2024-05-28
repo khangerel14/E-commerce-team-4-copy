@@ -1,3 +1,4 @@
+"use client";
 import React, { useContext, useState } from "react";
 import { createProductContext } from ".";
 
@@ -45,11 +46,26 @@ export const CreateProductField = () => {
             onChange={(e) => handleRef("productCode", e.target.value)}
           />
         </div>
-      </div>      
+      </div>
       <div className="w-full h-[163px] bg-white rounded-xl p-6 gap-2 flex justify-between">
-        <input type="text" className="border outline-none w-full p-4" placeholder="Image URL" onChange={(e) => handleRef("images", e.target.value)}/>
-        <input type="text" className="border outline-none w-full p-4" placeholder="Image URL" onChange={(e) => handleRef("images", e.target.value)}/>
-        <input type="text" className="border outline-none w-full p-4" placeholder="Image URL" onChange={(e) => handleRef("images", e.target.value)}/>
+        <input
+          type="text"
+          className="border outline-none w-full p-4"
+          placeholder="Image URL"
+          onChange={(e) => handleRef("images", e.target.value)}
+        />
+        <input
+          type="text"
+          className="border outline-none w-full p-4"
+          placeholder="Image URL"
+          onChange={(e) => handleRef("images", e.target.value)}
+        />
+        <input
+          type="text"
+          className="border outline-none w-full p-4"
+          placeholder="Image URL"
+          onChange={(e) => handleRef("images", e.target.value)}
+        />
       </div>
       <div className="w-full h-[163px] bg-white rounded-xl p-6 gap-2 flex justify-between">
         <div className="flex flex-col gap-1">

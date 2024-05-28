@@ -1,3 +1,4 @@
+"use client";
 import React, { useContext, useState } from "react";
 import { createProductContext } from ".";
 import { Plus } from "@/images";

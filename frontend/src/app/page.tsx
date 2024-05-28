@@ -14,7 +14,7 @@ const Home = () => {
     <div>
       <NavbarUser />
       <Carousel />
-      <div className="px-[202px] py-[100px] flex flex-col gap-[100px]">
+      <div className="flex flex-col mx-auto w-[1440px] gap-32 my-32">
         <Ontsloh />
         <New />
       </div>

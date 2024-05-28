@@ -17,6 +17,7 @@ type data = {
   mainCate: string;
   subCate: string;
 };
+const URL = process.env.NEXT_PUBLIC_MONGO_CONNECTION;
 
 const page = () => {
   const [data, setData] = useState<data>();
@@ -35,7 +36,6 @@ const page = () => {
   const handleRef = (field: string, value: string | number) => {
     formDataRef.current = { ...formDataRef.current, [field]: value };
   };
-  const URL = process.env.NEXT_PUBLIC_MONGO_CONNECTION;
   const gettingData = async () => {
     const productId = JSON.parse(localStorage.getItem("putProduct") as string);
     try {

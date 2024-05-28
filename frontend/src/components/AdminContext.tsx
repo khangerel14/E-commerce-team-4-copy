@@ -1,7 +1,12 @@
+"use client";
 import React, { createContext, useRef } from "react";
 
 export const AdminContext = createContext({});
-export const AdminContextProvider = ({ children }: any) => {
+export const AdminContextProvider = ({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) => {
   const formDataRef = useRef({
     shopInformation: "",
     city: "",

@@ -16,11 +16,10 @@ import { useEffect, useState } from "react";
 import dotenv from "dotenv";
 dotenv.config();
 
-const API = "http://localhost:8000/products/product";
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const URL = process.env.NEXT_PUBLIC_MONGO_CONNECTION;
 
 const page = () => {
-  const URL = process.env.NEXT_PUBLIC_MONGO_CONNECTION;
   const router = useRouter();
   const [filter, setFilter] = useState("");
   const { data, error, isLoading } = useSWR(`${URL}/products/product`, fetcher);

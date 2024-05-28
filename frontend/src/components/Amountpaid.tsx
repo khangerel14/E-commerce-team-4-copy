@@ -1,3 +1,4 @@
+"use client";
 import useSWR from "swr";
 import dotenv from "dotenv";
 dotenv.config();
@@ -11,10 +12,12 @@ export const Amountpaid = () => {
   const { data, error, isLoading } = useSWR(`${URL}/order`, fetcher);
 
   let price = 0;
-  const income = data?.getAllOrder.filter((e: any) => {
-    return e.createdAt.slice(8, 10) == today;
-  });
-  income?.map((e: any) => {
+  const income = data?.getAllOrder.filter(
+    (e: { createdAt: { slice: (arg0: number, arg1: number) => number } }) => {
+      return e.createdAt.slice(8, 10) == today;
+    }
+  );
+  income?.map((e: { amountPaid: number }) => {
     return (price = price + e.amountPaid);
   });
 

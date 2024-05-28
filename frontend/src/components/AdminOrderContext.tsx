@@ -1,3 +1,4 @@
+"use client";
 import React, { ReactNode, createContext, useState } from "react";
 import useSWR from "swr";
 import dotenv from "dotenv";
@@ -14,8 +15,8 @@ export const AdminOrderContextProvider = ({ children }: props) => {
   const URL = process.env.NEXT_PUBLIC_MONGO_CONNECTION;
   const birthDay = new Date();
   const today: number = birthDay.getDate();
-  const [orderData, setOrderData] = React.useState<any>([]);
-  const [activeButton, setActiveButton] = useState<string | any>(today);
+  const [orderData, setOrderData] = React.useState([]);
+  const [activeButton, setActiveButton] = useState<string | number>(today);
   const { data, error, isLoading } = useSWR(`${URL}/order`, fetcher);
 
   const dayFilter = () => {
@@ -34,7 +35,7 @@ export const AdminOrderContextProvider = ({ children }: props) => {
     setOrderData(weekFilter);
   };
 
-  const monthFilter = (value: any) => {
+  const monthFilter = (value: string) => {
     const monthFilter = data?.getAllOrder.filter((e: any) => {
       return e.createdAt.slice(5, 7) == value;
     });
@@ -42,14 +43,14 @@ export const AdminOrderContextProvider = ({ children }: props) => {
     setOrderData(monthFilter);
   };
 
-  const searchFilter = (value: any) => {
+  const searchFilter = (value: string) => {
     const searchFilter = data?.getAllOrder.filter((e: any) => {
       return e.orderNumber.includes(value) || e.userId?.email.includes(value);
     });
     setOrderData(searchFilter);
   };
 
-  const statusFilter = (value: any) => {
+  const statusFilter = (value: string) => {
     const statusFilter = data?.getAllOrder.filter((e: any) => {
       if (value === "Бүгд") {
         return e;

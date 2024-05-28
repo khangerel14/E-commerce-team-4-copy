@@ -6,6 +6,8 @@ import React, { useRef } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import dotenv from "dotenv";
 dotenv.config();
+import { setCookie } from "nookies";
+const URL = process.env.NEXT_PUBLIC_MONGO_CONNECTION;
 
 const page = () => {
   const router = useRouter();
@@ -17,12 +19,6 @@ const page = () => {
   const handleRef = (field: string, value: string | number) => {
     formDataRef.current = { ...formDataRef.current, [field]: value };
   };
-  if (formDataRef.current.password !== formDataRef.current.rePassword) {
-    alert("dont match passwords");
-    return;
-  }
-  const URL = process.env.NEXT_PUBLIC_MONGO_CONNECTION;
-  localStorage.removeItem("userEmail");
   const logIn = async () => {
     try {
       const res = await axios.post(`${URL}/user/logIn`, {
@@ -31,10 +27,7 @@ const page = () => {
 
       if (res) {
         router.push("/user/dashboard");
-        localStorage.setItem(
-          "userEmail",
-          JSON.stringify(res.data.email) as string
-        );
+        setCookie(null, "email", res.data.email);
         toast.success("Амжилттай нэвтэрлээ <3");
       }
     } catch (error) {

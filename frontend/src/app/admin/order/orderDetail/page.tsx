@@ -5,17 +5,17 @@ import { Deliver, Down, ToLeft } from "@/images";
 import { AsideBar, Navbar } from "@/components";
 import dotenv from "dotenv";
 dotenv.config();
+const URL = process.env.NEXT_PUBLIC_MONGO_CONNECTION;
 
 const page = () => {
   const orderId = JSON.parse(localStorage.getItem("orderId") as string);
   const [data, setData] = useState<string[] | any>([]);
-  const URL = process.env.NEXT_PUBLIC_MONGO_CONNECTION;
   const getOrderData = async () => {
     try {
       const get = await axios.get(`${URL}/order/${orderId.id}`);
       setData(get.data.getOneOrder);
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
 

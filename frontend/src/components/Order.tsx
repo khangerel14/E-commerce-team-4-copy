@@ -1,17 +1,21 @@
 "use client";
 import useSWR from "swr";
-
-const URL = "http://localhost:8000/order";
+import dotenv from "dotenv";
+dotenv.config();
+const URL = process.env.NEXT_PUBLIC_MONGO_CONNECTION;
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export const Order = () => {
   const birthDay = new Date();
   const today: number = birthDay.getDate();
-  const { data, error, isLoading } = useSWR(URL, fetcher);
+  const { data, error, isLoading } = useSWR(`${URL}/order`, fetcher);
+  console.log(data);
 
-  const oCount: any = data?.getAllOrder.filter((e: any) => {
-    return e.createdAt.slice(8, 10) == today;
-  });
+  const oCount = data?.getAllOrder.filter(
+    (e: { createdAt: { slice: (arg0: number, arg1: number) => number } }) => {
+      return e.createdAt.slice(8, 10) == today;
+    }
+  );
 
   const count = oCount?.length;
   return (

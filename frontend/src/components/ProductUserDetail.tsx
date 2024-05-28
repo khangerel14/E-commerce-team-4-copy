@@ -1,3 +1,4 @@
+"use client";
 import { SaveProduct, SearchProduct, Star, TrolleyProduct } from "@/images";
 import React, { useContext } from "react";
 import useSWR from "swr";

@@ -1,3 +1,4 @@
+"use client";
 import { orderStatus } from "@/utils/OrderStatus";
 import React, { useContext, useState } from "react";
 import { AdminOrderContext } from ".";

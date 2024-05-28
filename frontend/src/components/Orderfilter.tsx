@@ -1,3 +1,4 @@
+"use client";
 import { Search } from "@/images";
 import { month } from "@/utils/Month";
 import React, { useContext, useEffect, useState } from "react";

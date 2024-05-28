@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import dotenv from "dotenv";
 dotenv.config();
 
-const page = () => {
+const signUp = () => {
   const router = useRouter();
   const [error, setError] = useState("");
   const formDataRef = useRef({
@@ -25,10 +25,13 @@ const page = () => {
         const res = await axios.post(`${URL}/user`, {
           ...formDataRef.current,
         });
-        localStorage.setItem(
-          "userEmail",
-          JSON.stringify(formDataRef.current.email)
-        );
+
+        if (res.status === 201) {
+          localStorage.setItem(
+            "userEmail",
+            JSON.stringify(formDataRef.current.email)
+          );
+        }
         router.push("/user/dashboard");
         toast.success("amjilttai nevterlee.");
       } catch (error) {}
@@ -80,4 +83,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default signUp;

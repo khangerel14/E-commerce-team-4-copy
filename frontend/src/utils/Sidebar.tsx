@@ -1,11 +1,9 @@
 import { Board, Income, Order, Product, Settings } from "@/images";
-
-const id = JSON.parse(localStorage.getItem("id") as string);
 export const data = [
   {
     icon: <Board />,
     name: "Хяналтын самбар",
-    slug: `/admin/dashboard/${id}`,
+    slug: `/admin/dashboard`,
   },
   {
     icon: <Order />,

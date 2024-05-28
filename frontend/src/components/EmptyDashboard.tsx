@@ -1,3 +1,4 @@
+"use client";
 import { useRouter } from "next/navigation";
 import { ToLeft, Working } from "@/images";
 import { AsideBar, Navbar } from ".";

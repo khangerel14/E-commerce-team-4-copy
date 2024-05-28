@@ -1,28 +1,34 @@
 "use client";
 import { AsideBar, Navbar } from "@/components";
-import { Calendar, Down, Download, ExpandMore } from "@/images";
+import { Down } from "@/images";
 import { month } from "@/utils/Month";
-import { useState } from "react";
+import {
+  JSXElementConstructor,
+  Key,
+  PromiseLikeOfReactNode,
+  ReactElement,
+  ReactNode,
+  ReactPortal,
+  useState,
+} from "react";
 import useSWR from "swr";
 import dotenv from "dotenv";
 dotenv.config();
+const URL = process.env.NEXT_PUBLIC_MONGO_CONNECTION;
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-const page = () => {
-  const URL = process.env.NEXT_PUBLIC_MONGO_CONNECTION;
+const Page = () => {
   const { data, error, isLoading } = useSWR(`${URL}/order`, fetcher);
   const [activeButton, setActiveButton] = useState("");
-  console.log(data);
-
   const orderData = data?.getAllOrder;
   const birthDay = new Date();
   const today: number = birthDay.getDate();
-  const filterData = orderData?.filter((e: any) => {
+  const filterData = orderData?.filter((e: { createdAt: string }) => {
     if (activeButton === "") {
-      return e.createdAt.slice(8, 10) == today;
+      return e.createdAt.slice(8, 10) == String(today);
     } else if (activeButton === "week") {
-      return e.createdAt.slice(8, 10) > today - 7;
+      return e.createdAt.slice(8, 10) > String(today - 7);
     } else if (activeButton === "сараар") {
       return e;
     } else {
@@ -108,28 +114,47 @@ const page = () => {
                 <th className="w-[150px] pr-5">Огноо</th>
               </tr>
               {filterData &&
-                filterData.map((val: any, key: any) => {
-                  return (
-                    <div className="flex flex-col px-12">
-                      <tr className="px-6 flex justify-between" key={key}>
-                        <td className="w-[200px]">#{val._id.slice(0, 10)}</td>
-                        <td className="w-[200px] pl-[40px]">
-                          {val.phoneNumber}
-                        </td>
-                        <td className="w-[130px] pl-[40px]">
-                          {val.amountPaid
-                            .toFixed(2)
-                            .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}
-                          ₮
-                        </td>
-                        <td className="w-[150px] pl-[50px]">
-                          {val.createdAt.slice(0, 10)}
-                        </td>
-                      </tr>
-                      <div className="border-b bg-grey mt-2"></div>
-                    </div>
-                  );
-                })}
+                filterData.map(
+                  (
+                    val: {
+                      _id: string | any[];
+                      phoneNumber:
+                        | string
+                        | number
+                        | boolean
+                        | ReactElement<any, string | JSXElementConstructor<any>>
+                        | Iterable<ReactNode>
+                        | ReactPortal
+                        | PromiseLikeOfReactNode
+                        | null
+                        | undefined;
+                      amountPaid: number;
+                      createdAt: string | any[];
+                    },
+                    key: Key | null | undefined
+                  ) => {
+                    return (
+                      <div className="flex flex-col px-12">
+                        <tr className="px-6 flex justify-between" key={key}>
+                          <td className="w-[200px]">#{val._id.slice(0, 10)}</td>
+                          <td className="w-[200px] pl-[40px]">
+                            {val.phoneNumber}
+                          </td>
+                          <td className="w-[130px] pl-[40px]">
+                            {val.amountPaid
+                              .toFixed(2)
+                              .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}
+                            ₮
+                          </td>
+                          <td className="w-[150px] pl-[50px]">
+                            {val.createdAt.slice(0, 10)}
+                          </td>
+                        </tr>
+                        <div className="border-b bg-grey mt-2"></div>
+                      </div>
+                    );
+                  }
+                )}
             </tbody>
           </table>
         </div>
@@ -137,4 +162,4 @@ const page = () => {
     </div>
   );
 };
-export default page;
+export default Page;

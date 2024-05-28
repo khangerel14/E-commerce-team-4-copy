@@ -1,3 +1,4 @@
+"use client";
 import { SearchProduct, Trolley } from "@/images";
 import Heart from "@/images/Heart";
 import React, { useContext, useState } from "react";

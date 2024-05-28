@@ -5,10 +5,13 @@ import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import dotenv from "dotenv";
+import { parseCookies } from "nookies";
 dotenv.config();
 
 const page = () => {
   const { orderData, setOrderData }: any = useContext(UserOrderContext);
+  console.log(orderData);
+
   const [data, setData] = useState<any>([]);
   const router = useRouter();
   const URL = process.env.NEXT_PUBLIC_MONGO_CONNECTION;
@@ -18,7 +21,7 @@ const page = () => {
     let order;
     try {
       for (let i = 0; i < orderData.length; i++) {
-        order = await axios.get(`${URL}products/${orderData[i]._id}`);
+        order = await axios.get(`${URL}/products/${orderData[i]._id}`);
         const productData = order?.data.getData;
         productsData.push({ productData });
       }
@@ -31,11 +34,10 @@ const page = () => {
       totalPrice + data[i].productData.price * orderData[i]?.quantity;
   }
 
+  const cookies = parseCookies();
+  const email = cookies.email;
   useEffect(() => {
-    const rawJson: string | null = localStorage.getItem("userEmail");
-    const user = rawJson && JSON.parse(rawJson);
-
-    if (!user) {
+    if (!email) {
       router.push("/user/login");
       toast.error("Та нэвтэрнэ үү.");
       return;

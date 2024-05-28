@@ -1,18 +1,18 @@
 "use client";
 import { Footer, NavbarUser, PathUser, ProductUserDetail } from "@/components";
 import { useRouter } from "next/navigation";
+import { parseCookies } from "nookies";
 import React, { useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 const page = () => {
   const router = useRouter();
+  const cookies = parseCookies();
+  const email = cookies.email;
   useEffect(() => {
-    const rawJson: string | null = localStorage.getItem("userEmail");
-    const user = rawJson && JSON.parse(rawJson);
-
-    if (!user) {
-      toast.error("Та нэвтэрнэ үү.");
+    if (!email) {
       router.push("/user/login");
+      toast.error("Та нэвтэрнэ үү.");
       return;
     }
   }, []);

@@ -6,6 +6,7 @@ import React, { useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import useSWR from "swr";
 import dotenv from "dotenv";
+import { parseCookies } from "nookies";
 dotenv.config();
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -16,13 +17,12 @@ const page = () => {
   const { data, error } = useSWR(`${URL}/products/product`, fetcher);
   const length = data?.getAll.length;
 
+  const cookies = parseCookies();
+  const email = cookies.email;
   useEffect(() => {
-    const rawJson: string | null = localStorage.getItem("userEmail");
-    const user = rawJson && JSON.parse(rawJson);
-
-    if (!user) {
-      toast.error("Та нэвтэрнэ үү.");
+    if (!email) {
       router.push("/user/login");
+      toast.error("Та нэвтэрнэ үү.");
       return;
     }
   }, []);

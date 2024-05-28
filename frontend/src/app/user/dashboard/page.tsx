@@ -8,16 +8,16 @@ import {
   Service,
 } from "@/components";
 import { useRouter } from "next/navigation";
+import { parseCookies } from "nookies";
 import React, { useEffect } from "react";
 import toast from "react-hot-toast";
 
 const page = () => {
   const router = useRouter();
+  const cookies = parseCookies();
+  const email = cookies.email;
   useEffect(() => {
-    const rawJson: string | null = localStorage.getItem("userEmail");
-    const user = rawJson && JSON.parse(rawJson);
-
-    if (!user) {
+    if (!email) {
       router.push("/user/login");
       toast.error("Та нэвтэрнэ үү.");
       return;
